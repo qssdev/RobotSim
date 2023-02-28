@@ -1,0 +1,5 @@
+﻿move
+right
+left
+move
+report
