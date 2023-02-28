@@ -1,4 +1,6 @@
-﻿namespace RobotSim
+﻿using System;
+
+namespace RobotSim
 {
     public class Robot : Location
     {
@@ -6,9 +8,7 @@
         public int BoardWidth { get; set; }
         public int BoardHeight { get; set; }
 
-        public Robot() : base(0, 0, "NORTH")
-        {
-        }
+        public Robot() : base(0, 0, "NORTH") {}
 
         public void Left()
         {
@@ -96,14 +96,12 @@
             return true;
         }
 
-        public string Report()
+        public void Report()
         {
-            if (!IsOnTheBoard)
+            if (IsOnTheBoard)
             {
-                return "Invalid command";
+                Console.WriteLine($"{X},{Y},{Facing}");
             }
-
-            return $"{X},{Y},{Facing}";
         }
 
     }

@@ -16,12 +16,12 @@ namespace RobotSim
             Robots = new List<Robot>();
         }
 
-        public void Place(Location location) {
+        public Robot Place(Location location) {
             var robot = new Robot();
 
             if (robot.X + location.X > this.Width - 1 || robot.Y + location.Y > this.Height - 1)
             {
-                return;
+                return null;
             }
 
             robot.X = location.X;
@@ -33,7 +33,7 @@ namespace RobotSim
 
             Robots.Add(robot);
             Console.WriteLine($"PLACE {robot.X}, {robot.Y}, {robot.Facing}");
-
+            return robot;
         }
 
     }

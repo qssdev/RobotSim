@@ -1,5 +1,37 @@
-﻿move
-right
-left
+﻿place 0,6,north
 move
+right
+report
+
+move
+report
+
+place 0,0,west
+place 6,6,north
+move
+left
+left
+report
+
+report
+move
+place 3,3,south
+report
+
+place 0,0,north
+move
+move
+move
+move
+move
+move
+right
+move
+move
+move
+move
+right
+move
+move
+mo
 report

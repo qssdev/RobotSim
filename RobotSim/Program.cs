@@ -1,8 +1,6 @@
 ﻿using System;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace RobotSim
 {
@@ -16,45 +14,49 @@ namespace RobotSim
             Board board = new Board(5, 5);
             Robot currentRobot = new Robot();
 
-            if (File.Exists(commandFile))
+            if (File.Exists(commandFile)) 
             {
-                commands = File.ReadAllLines(commandFile);
+                commands = File.ReadAllLines(commandFile).Where(x => x.Length > 0).ToArray();
                 if (commands.Count() > 0)
                 {
                     foreach (var command in commands)
                     {
                         if (command.ToUpper().StartsWith("PLACE"))
                         {
-                            int x;
-                            int y;
+                            int x,y;
                             string face;
 
                             var commandData = command.Split();
-                            var parammeter = commandData[1].Split(new char[] { ',' }, 3);
+                            try
+                            {
+                                var parammeter = commandData[1].Split(new char[] { ',' }, 3);
+                                int.TryParse(parammeter[0], out x);
+                                int.TryParse(parammeter[1], out y);
+                                face = parammeter[2];
 
-                            int.TryParse(parammeter[0], out x);
-                            int.TryParse(parammeter[1], out y);
-                            face = parammeter[2];
-
-                            board.Place(new Location(x, y, face));
-                            currentRobot = board.Robots.LastOrDefault();
-
+                                currentRobot = board.Place(new Location(x, y, face));
+                            }
+                            catch (Exception ex)
+                            {
+                                //ignore the error proceed to the next command
+                                currentRobot = null;
+                            }
                         }
                         else if (command.ToUpper() == "LEFT")
                         {
-                            currentRobot.Left();
+                            currentRobot?.Left();
                         }
                         else if (command.ToUpper() == "RIGHT")
                         {
-                            currentRobot.Right();
+                            currentRobot?.Right();
                         }
                         else if (command.ToUpper() == "REPORT")
                         {
-                            Console.WriteLine(currentRobot.Report());
+                            currentRobot?.Report();
                         }
                         else if (command.ToUpper() == "MOVE")
                         {
-                            currentRobot.Move();
+                            currentRobot?.Move();
                         }
                     }
                 }
